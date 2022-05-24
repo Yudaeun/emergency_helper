@@ -67,7 +67,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="index.php">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
               응급호출 리스트
             </a>
@@ -101,7 +101,7 @@
         </h6>-->
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="temp.php">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
               1인가구 온습도 정보 관리
             </a>
@@ -149,7 +149,7 @@
       <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">대기중인 응급호출 리스트</h1>
+                        <h1 class="mt-4">온습도 정보 관리</h1>
                         <ol class="breadcrumb mb-4">
                             
                             
@@ -164,23 +164,17 @@
 <?php
 	$con = mysqli_connect("192.168.0.7", "root", "1234", "FOBO");
 
-	$sql = "SELECT * FROM call_time WHERE definition='emergency' and state='waiting'";
+	$sql = "SELECT * FROM temptbl WHERE temp>30";
  
    $ret = mysqli_query($con, $sql);   
-   echo "<thead><><th>일련번호</th><th>시간</th><th>1인가구번호</th></th><th>호출내용</th></th><th>상태</th><th>완료</th></tr></thead><tbody>";
+   echo "<thead><th>일련번호</th><th>시간</th><th>1인가구번호</th></th><th>온도</th></th><th>습도</th></tr></thead><tbody>";
  while($row = mysqli_fetch_array($ret)) {
-  $jb_edit = '
-  <form action="index_complete.php" method="POST">
-    <input type="hidden" name="call_no" value="' . $row[ 'ct_num' ] . '">
-    <input type="submit" value="Complete">
-  </form>
-';
-	  echo "<tr><td>", $row['ct_num'], 
+	  echo "<tr><td>", $row['temp_num'], 
 	  "</td><td>", $row['time'], 
 	  "</td><td>", $row['house_num'],
-      "</td><td>", $row['definition'],
-	  "</td><td>", $row['state'],
-    "</td><td>", $jb_edit,
+      "</td><td>", $row['temp'],
+	  "</td><td>", $row['humidity'],
+
 	 
 	
 		   "</td></tr>";
